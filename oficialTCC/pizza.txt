@@ -1,0 +1,26 @@
+
+public function pedirPizza()
+{
+    pizza.numbers
+    {
+        arr = [
+            '20' => 'brocolis',
+            '23' => 'palmito',
+            '39' => 'calabresa',
+            '79' => 'frango com catupiri'
+        ];
+
+        return $this->arr;
+    }
+}
+
+$pizza = new Pizza();
+$pizza::pedirPizza()->call()->type('return', function(){
+    if(output(equal('false'))){
+       return Console.exe::('forced', '3000');
+    }
+        else{
+        return Console.exe::output('returned');
+        }
+});
+
