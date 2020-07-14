@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Training_has_exercise;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,8 +34,16 @@ class TrainingHasExerciseController extends Controller
             ->where('training_has_exercises.idficha', '=', $id)
             ->get();
 
+        $dateTraining = DB::table('trainingdate')
+            ->select('datatroca')
+            ->where('idusuario', '=', $id)
+            ->get();
+
+
+
         return view('professor.mostrarTreino', [
-            'obj' => $sql
+            'obj' => $sql,
+            'data' => $dateTraining
         ]);
     }
 
@@ -77,17 +86,31 @@ class TrainingHasExerciseController extends Controller
     #Metodo que reajanja os vetores bugantes e chama a funcao acima para inserir no bd
     public function createTraining(Request $request)
     {
+        $idficha = $request->id;
+
         #Verificando se tem uma sessao autenticada para logar
         if(!session('auth')){
             return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
         }
-        $idficha = $request->id;
+
+        $td = new TrainingDateController();
+        $statusDataTreino = $td->storeTrainingDayOf($request->id, $request->dataTroca);
+
+        if($statusDataTreino == 'false'){
+            return redirect()->route('prof.homepage.montarTreino',$request->id)->withInput()->withErrors(['Escolha uma data valida !']);
+        }
+
         $hidden = $request->invisivel;
         $caixas = $request->caixas;
         $series = $request->serie;
         $repeticoes = $request->repeticao;
         $intervalos = $request->intervalo;
         $obs = $request->obs;
+
+        // verificando se o usuario marcou um treino
+        if($caixas == null){
+            return redirect()->route('prof.homepage.montarTreino', $request->id)->withInput()->withErrors(['marque um treino !']);
+        }
 
         $this->deleteTraining($idficha);
 
@@ -119,5 +142,6 @@ class TrainingHasExerciseController extends Controller
         }
 
         return redirect()->route('prof.homepage.mostrarTreino', $idficha);
+
     }
 }

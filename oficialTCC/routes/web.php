@@ -151,3 +151,4 @@ Route::post('/prof/homepage/montarTreino/realizar',
 
 //Fim-treinos tem exercicios
 
+

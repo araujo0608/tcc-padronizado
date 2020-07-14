@@ -38,7 +38,6 @@
                         {{$error}}
                     @endforeach
                 </div>
-
             @endif
 
             <input placeholder="email@" type="email" name="email" id="email">

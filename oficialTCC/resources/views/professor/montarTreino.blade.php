@@ -9,7 +9,17 @@
     <title>Criacao do treino</title>
 </head>
 <body>
-    <h2>{{ session('nome') }}, aqui voce monta o treino do  {{ $user->nome }}</h2>
+    <h2>Montar o treino do(a)  {{ $user->nome }}</h2>
+
+    @if($errors->all())
+        <div>
+            @foreach($errors->all() as $error)
+                <h5>{{$error}}</h5>
+            @endforeach
+        </div>
+    @endif
+    <br>
+    <br>
 
     <table border="2">
         <tr>
@@ -37,6 +47,14 @@
                 </tr>
         @endforeach
     </table>
+
+    <h5>
+        Esse treino vai até: <input type="date" name="dataTroca" id="dataTroca" required>
+    </h5>
+    <p>
+        Data de hoje: {{ date('d-m-Y') }}
+    </p>
+
     <button type="submit">Salvar</button>
     </form>
 

@@ -11,7 +11,7 @@
     <h2>Ficha de treino</h2>
 
     @if(count($obj) <= 0)
-        <p>É preciso que algum professor monte seu treino</p>
+        <p>É preciso que o professor monte seu treino</p>
     @else
         <h3>Treinador: {{ session('nome') }}</h3>
         <h3>
@@ -19,6 +19,15 @@
             @foreach($obj as $sql)
                 {{ $sql->nome }}
                 @break
+            @endforeach
+        </h3>
+
+        <h3>
+            Treino vai até:
+            @foreach($data as $treino)
+                @if($loop->last)
+                    {{date('d-m-Y', strtotime($treino->datatroca))}}
+                @endif
             @endforeach
         </h3>
 
