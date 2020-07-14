@@ -14,8 +14,21 @@ class User extends Authenticatable
 
     public function trainingSheet()
     {
-        return $this->hasOne(Trainingsheet::class, 'idusuario', 'id');
+        return $this->hasOne(
+            Trainingsheet::class,
+            'idusuario',
+            'id'
+        );
     }
+
+    public function trainingDate(){
+        return $this->hasOne(
+            TrainingDate::class,
+            'idusuario',
+            'id'
+        );
+    }
+
 
     /**
      * The attributes that are mass assignable.
