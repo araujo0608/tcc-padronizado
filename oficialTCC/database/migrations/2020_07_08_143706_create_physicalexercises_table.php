@@ -15,8 +15,10 @@ class CreatePhysicalexercisesTable extends Migration
     {
         Schema::create('physicalexercises', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome', 50);
-            $table->string('areamuscular', 50);
+            $table->string('nome', 30);
+            $table->string('areamuscular', 30);
+            $table->string('aparelho', 30);
+            $table->enum('letra', ['A', 'B', 'C', 'D', 'E']);
             $table->timestamps();
         });
     }

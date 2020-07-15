@@ -24,4 +24,31 @@ class PhysicalExerciseController extends Controller
             'user' => $user
         ]);
     }
+
+    #Funcao que insere exercicios no banco de dados
+    public function storeExercise(Request $request){
+
+        #Verificando se tem uma sessao autenticada para logar
+        if(!session('auth')){
+            return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
+        }
+
+        if ($request){
+            $exe = new PhysicalExercise();
+            $exe->nome = $request->nome;
+            $exe->areamuscular = $request->area;
+            $exe->aparelho = $request->aparelho;
+            $exe->letra = $request->letra;
+
+            $exe->save();
+
+            return redirect()->route('adm.cadastro.exercicios')->withInput()->withErrors(['cadastrado com sucesso!']);
+        }
+        else{
+            return redirect()->route('adm.cadastro.exercicios')->withInput()->withErrors(['erro no cadastro!']);
+        }
+
+
+    }
+
 }

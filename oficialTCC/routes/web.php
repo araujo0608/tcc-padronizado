@@ -46,11 +46,20 @@ Route::get('/adm/cadastro/professor', function () {
     return view('adm.cadastroProf');
 })->name('adm.cadastro.professor');
 
+Route::get('/adm/cadastro/exercicios', function (){
+    return view('adm.cadastroExercicio');
+})->name('adm.cadastro.exercicios');
+
+Route::get('/adm/listar/exercicios', 'AdmController@listExercises')->name('adm.listar.exercicios');
+
 Route::get('/adm/listar', 'AdmController@listAllUsers')
     ->name('adm.listar');
 
 Route::get('/adm/listar/edicao/{user}', 'AdmController@viewEditing')
     ->name('adm.listar.edicao');
+
+Route::get('/adm/listar/edicao/exercicio/{exe}', 'AdmController@viewEditingExe')
+    ->name('adm.listar.edicao.exercicio');
 # ====================================
 
 Route::get('/', 'AdmController@findADM')->name('adm.find');
@@ -60,11 +69,17 @@ Route::post('/adm/cadastro/realizar', 'AdmController@storeADM')
 Route::post('/adm/cadastro/professor/realizar', 'AdmController@storeProf')
     ->name('adm.cadastro.professor.realizar');
 
+Route::post('/adm/cadastro/exercicio/realizar', 'PhysicalExerciseController@storeExercise')
+    ->name('adm.cadastro.exercicio.realizar');
+
 Route::delete('/adm/listar/deletar', 'AdmController@del')
     ->name('adm.listar.deletar');
 
 Route::put('/adm/listar/deletar/realizar/{user}', 'AdmController@edit')
     ->name('adm.listar.deletar.realizar');
+
+Route::put('/adm/listar/edicao/exercicio/realizar/{exe}', 'AdmController@editExe')
+    ->name('adm.listar.edicao.exercicio.realizar');
 
 
 //Fim-adm

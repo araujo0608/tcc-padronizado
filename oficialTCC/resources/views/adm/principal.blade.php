@@ -13,6 +13,8 @@
 
     <a href="{{ route('adm.cadastro.professor') }}"><button> Cadastrar novo professor </button></a>
     <a href="{{ route('adm.listar') }}"><button> Listar usuarios </button></a>
+    <a href="{{ route('adm.cadastro.exercicios') }}"><button> Cadastrar novo exercicio </button></a>
+    <a href="{{ route('adm.listar.exercicios') }}"><button>Listar exercicios</button></a>
     <a href="{{ route('aluno.homepage.logout') }}">logout</a>
 
     <script src="{{ asset('site/bootstrap.js') }}"></script>

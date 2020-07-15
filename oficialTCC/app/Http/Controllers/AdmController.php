@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\PhysicalExercise;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -150,6 +151,62 @@ class AdmController extends Controller
 
             $user->save();
             return redirect()->route('adm.listar');
+        }
+        else{
+            return redirect()->back()->withInput()->withErrors(["Erro de edicao!"]);
+        }
+
+    }
+
+    #Funcao que lista os exercicios do banco de dados
+    public function listExercises()
+    {
+        $exe = PhysicalExercise::all();
+
+        return view('adm.listarExercicios', [
+            'exercicios' => $exe
+        ]);
+    }
+
+    #Funcao que retorna a view de edicao do exercicio
+    public function viewEditingExe($exe)
+    {
+        //dd($exe);
+
+        $query = DB::table('physicalexercises')
+            ->where('id', '=', $exe)
+            ->first();
+
+        return view('adm.edicaoExercicio', [
+            'exercicio' => $query
+        ]);
+    }
+
+    #Funcao que faz a edicao de fato dos exercicios
+    public function editExe(Request $request, PhysicalExercise $exe){
+        #Verificando se tem uma sessao autenticada para logar
+        if(!session('auth')){
+            return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
+        }
+
+        if($request){
+            $exe->nome = $request->nome;
+
+
+            if(!empty($request->area)){
+                $exe->areamuscular = $request->area;
+            }
+
+            if(!empty($request->aparelho)){
+                $exe->aparelho = $request->aparelho;
+            }
+
+            if(!empty($request->letra)){
+                $exe->letra = $request->letra;
+            }
+
+            $exe->save();
+            return redirect()->route('adm.listar.exercicios');
         }
         else{
             return redirect()->back()->withInput()->withErrors(["Erro de edicao!"]);
