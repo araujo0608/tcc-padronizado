@@ -28,6 +28,7 @@ class AdmController extends Controller
     public function storeADM(Request $request)
     {
         $adm = new User();
+        $adm->nome = $request->nome;
         $adm->email = $request->email;
         $adm->password = $request->password;
         $adm->acesso = '2';

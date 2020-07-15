@@ -20,6 +20,7 @@
         @endforeach
     @endif
 
+    Nome: <input type="text" name="nome" id="nome">
     Email: <input type="email" name="email" id="email" required>
     Senha:  <input type="password" name="password" id="password" required>
 
