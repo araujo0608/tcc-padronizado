@@ -183,35 +183,48 @@ class AdmController extends Controller
     }
 
     #Funcao que faz a edicao de fato dos exercicios
-    public function editExe(Request $request, PhysicalExercise $exe){
+    public function editExe(Request $request){
         #Verificando se tem uma sessao autenticada para logar
         if(!session('auth')){
             return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
         }
 
+
         if($request){
-            $exe->nome = $request->nome;
 
+            DB::table('physicalexercises')
+                ->where('id', $request->exe)
+                ->update([
+                    'nome' => $request->nome,
+                    'areamuscular' => $request->area,
+                    'aparelho' => $request->aparelho,
+                    'letra' => $request->letra
+                ]);
 
-            if(!empty($request->area)){
-                $exe->areamuscular = $request->area;
-            }
-
-            if(!empty($request->aparelho)){
-                $exe->aparelho = $request->aparelho;
-            }
-
-            if(!empty($request->letra)){
-                $exe->letra = $request->letra;
-            }
-
-            $exe->save();
             return redirect()->route('adm.listar.exercicios');
         }
         else{
             return redirect()->back()->withInput()->withErrors(["Erro de edicao!"]);
         }
 
+    }
+
+    #Funcao que deleta o exercicio do bd
+    public function delExe(Request $request)
+    {
+        #Verificando se tem uma sessao autenticada para logar
+        if(!session('auth')){
+            return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
+        }
+
+        $sql = DB::table('physicalexercises')->where('id', '=', $request->id)->delete();
+
+        if($sql){
+            return redirect()->route('adm.listar.exercicios');
+        }
+        else {
+            echo "erro na delecao do usuario ".$request->id;
+        }
     }
 
 }

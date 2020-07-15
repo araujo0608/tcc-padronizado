@@ -30,10 +30,22 @@
                 <td>{{ $exercicio->aparelho}}</td>
                 <td>{{ $exercicio->letra }}</td>
                 <td><a href="{{ route('adm.listar.edicao.exercicio', $exercicio->id) }}"><button>editar</button></a></td>
-                <td><a href=""><button>excluir</button></a></td>
+
+                <td>
+                    <form action="{{ route('adm.listar.exercicios.deletar') }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="id" value="{{ $exercicio->id }}">
+                        <button type="submit">excluir</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </table>
+
+    <br>
+    <br>
+    <a href="{{ route('adm.principal') }}"><button>voltar</button></a>
 
 </body>
 </html>

@@ -11,7 +11,7 @@
     <h1>Modo edicao de exercicio</h1>
     <h5>insira os novos dados no formulario</h5>
 
-    <form action="{{ route('adm.listar.edicao.exercicio.realizar', ['exe' => $exercicio]) }}" method="post">
+    <form action="{{ route('adm.listar.edicao.exercicio.realizar') }}" method="post">
         @csrf
         @method('PUT')
 
@@ -21,14 +21,15 @@
             @endforeach
         @endif
 
+        <input type="hidden" name="exe" id="exe" value="{{ $exercicio->id }}">
         <p>
-            Nome: <input type="text" name="nome" id="nome" value="{{ $exercicio->nome }}">
+            Nome: <input type="text" name="nome" id="nome" value="{{ $exercicio->nome }}" required>
         </p>
         <p>
-            Area muscular: <input type="text" name="area" id="area" value="{{ $exercicio->areamuscular }}">
+            Area muscular: <input type="text" name="area" id="area" value="{{ $exercicio->areamuscular }}" required>
         </p>
         <p>
-            Aparelho: <input type="text" name="aparelho" id="aparelho" value="{{ $exercicio->aparelho }}">
+            Aparelho: <input type="text" name="aparelho" id="aparelho" value="{{ $exercicio->aparelho }}" required>
         </p>
         <p>
             Letra:
@@ -40,7 +41,7 @@
                 <option value="E">E</option>
             </select>
         </p>
-            <button type="submit">cadastrar</button>
+            <button type="submit">editar</button>
     </form>
 
     <br>

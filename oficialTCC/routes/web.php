@@ -75,10 +75,13 @@ Route::post('/adm/cadastro/exercicio/realizar', 'PhysicalExerciseController@stor
 Route::delete('/adm/listar/deletar', 'AdmController@del')
     ->name('adm.listar.deletar');
 
+Route::delete('/adm/listar/exercicios/deletar', 'AdmController@delExe')
+    ->name('adm.listar.exercicios.deletar');
+
 Route::put('/adm/listar/deletar/realizar/{user}', 'AdmController@edit')
     ->name('adm.listar.deletar.realizar');
 
-Route::put('/adm/listar/edicao/exercicio/realizar/{exe}', 'AdmController@editExe')
+Route::put('/adm/listar/edicao/exercicio/realizar', 'AdmController@editExe')
     ->name('adm.listar.edicao.exercicio.realizar');
 
 
