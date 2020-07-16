@@ -50,6 +50,17 @@ Route::get('/adm/cadastro/exercicios', function (){
     return view('adm.cadastroExercicio');
 })->name('adm.cadastro.exercicios');
 
+Route::get('/adm/orcamento', function (){
+    return view('adm.orcamento');
+})->name('adm.orcamento');
+
+Route::get('/adm/orcamento/cadastro', function (){
+    return view('adm.cadastroOrcamento');
+})->name('adm.orcamento.cadastro');
+
+Route::get('/adm/orcamento/listar', 'BudgetController@listAllBudget')
+    ->name('adm.orcamento.listar');
+
 Route::get('/adm/listar/exercicios', 'AdmController@listExercises')->name('adm.listar.exercicios');
 
 Route::get('/adm/listar', 'AdmController@listAllUsers')
@@ -69,6 +80,15 @@ Route::post('/adm/cadastro/realizar', 'AdmController@storeADM')
 Route::post('/adm/cadastro/professor/realizar', 'AdmController@storeProf')
     ->name('adm.cadastro.professor.realizar');
 
+Route::post('/adm/orcamento/cadastro/usuario', 'BudgetController@viewPopUp')
+    ->name('adm.orcamento.cadastro.usuario');
+
+Route::post('/adm/orcamento/editar', 'BudgetController@viewEditBudget')
+    ->name('adm.orcamento.editar');
+
+Route::post('/adm/orcamento/cadastro/usuario/realizar', 'BudgetController@storeBudget')
+    ->name('adm.orcamento.cadastro.realizar');
+
 Route::post('/adm/cadastro/exercicio/realizar', 'PhysicalExerciseController@storeExercise')
     ->name('adm.cadastro.exercicio.realizar');
 
@@ -83,6 +103,9 @@ Route::put('/adm/listar/deletar/realizar/{user}', 'AdmController@edit')
 
 Route::put('/adm/listar/edicao/exercicio/realizar', 'AdmController@editExe')
     ->name('adm.listar.edicao.exercicio.realizar');
+
+Route::put('/adm/listar/edicao/orcamento/realizar', 'BudgetController@editBudget')
+    ->name('adm.listar.edicao.orcamento.realizar');
 
 
 //Fim-adm
