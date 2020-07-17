@@ -8,7 +8,9 @@
     <title> lista de orcamentos </title>
 </head>
 <body>
-        <h1>Orcamentos</h1>
+        <h1>Orcamentos pendentes</h1>
+
+        <a href="{{ route('adm.orcamento.listar.pagos') }}"><button>Orcamentos pagos</button></a>
 
         <table border="2">
             <tr>
@@ -33,7 +35,13 @@
                     <td>{{$dado->situacao}}</td>
 
                     @if($dado->situacao == 'pendente')
-                        <td><a href="#"><button>Efetuar pagamento</button></a></td>
+                        <td>
+                            <form action="{{route('adm.orcamento.pagar')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="idusuario" value="{{ $dado->id }}">
+                                <button type="submit">Efetuar pagamento</button>
+                            </form>
+                        </td>
                     @else
                         <td>################</td>
                     @endif
@@ -54,7 +62,16 @@
 
 
                     @if($dado->situacao == 'pendente')
-                    <td><a href=""><button>excluir</button></a></td>
+                    <td>
+                        <form action="{{route('adm.edicao.orcamento.deletar')}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="idusuario" value="{{ $dado->id }}">
+                            <input type="hidden" name="preco" value="{{ $dado->preco }}">
+                            <input type="hidden" name="vencimento" value="{{ $dado->vencimento }}">
+                            <button type="submit">excluir</button>
+                        </form>
+                    </td>
                     @else
                         <td>######</td>
                     @endif

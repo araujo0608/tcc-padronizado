@@ -14,14 +14,22 @@
         @csrf
         @method('PUT')
 
+        @if($errors->all())
+                @foreach($errors->all() as $error)
+                    <p> {{ $error }} </p>
+                @endforeach
+        @endif
+
         <input type="hidden" name="idusuario" value="{{ $dados->idusuario }}">
+        <input type="hidden" name="velhovencimento" value="{{ $dados->vencimento}}">
+        <input type="hidden" name="velhopreco" value="{{ $dados->preco }}">
 
         <p>
-            Preco: <input type="text" name="novopreco" id="novopreco" value="{{ $dados->preco }}">
+            Preco: <input type="number" name="novopreco" id="novopreco" step="any" min="0" value="{{ $dados->preco }}" required>
         </p>
 
         <p>
-            Data de vencimento: <input type="date" name="novovencimento" id="novovencimento" value="{{ $dados->vencimento }}">
+            Data de vencimento: <input type="date" name="novovencimento" id="datefield" required>
         </p>
 
         <button type="submit">Efetuar edicao</button>
@@ -30,5 +38,22 @@
     <br>
     <br>
     <a href="{{ route('adm.orcamento.listar') }}"><button>&slarr;</button></a>
+
+    {{--Script que define um limite para a data de vencimento--}}
+    <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+                dd='0'+dd
+            } 
+            if(mm<10){
+                mm='0'+mm
+            } 
+
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("datefield").setAttribute("min", today);
+    </script>
 </body>
 </html>
