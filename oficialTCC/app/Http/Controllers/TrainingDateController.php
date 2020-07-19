@@ -14,7 +14,7 @@ class TrainingDateController extends Controller
         #Pegando a data atual para comparar
         $dataAtual = date('Y-m-d');
 
-        if(strtotime($dataTroca) > strtotime($dataAtual)){
+        if(strtotime($dataTroca) >= strtotime($dataAtual)){
             DB::table('trainingdate')
                 ->insert(
                     array('idusuario' => $id, 'datatroca' => $dataTroca)
