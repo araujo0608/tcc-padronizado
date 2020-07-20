@@ -21,12 +21,13 @@
                 @endforeach
             @endif
             <p>
+
                 Data de vencimento:
                 <input type="date" name="vencimento" id="vencimento" required>
             </p>
             <p>
                 Preco:
-                <input type="number" name="preco" id="preco" step="any" min="0" required>
+                <input type="number" name="preco" id="preco" step="any" min="0" max="4000" required>
             </p>
 
             <button type="submit">usuario</button>

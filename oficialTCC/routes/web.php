@@ -208,5 +208,3 @@ Route::post('/prof/homepage/montarTreino/realizar',
     ->name('prof.homepage.montarTreino.realizar');
 
 //Fim-treinos tem exercicios
-
-

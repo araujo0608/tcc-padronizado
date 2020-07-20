@@ -124,14 +124,6 @@ class BudgetController extends Controller
             return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
         }
 
-        $mes = date('m');
-
-        switch($mes){
-            case 07:
-                echo "pegou!";
-            break;
-        }
-
         $spider_man = DB::table('budget')
             ->join('users', 'budget.idusuario', '=', 'users.id')
             ->select(
@@ -144,7 +136,7 @@ class BudgetController extends Controller
                         'budget.situacao',
                         'budget.idusuario'
             )
-            ->orderBy('')
+            ->orderBy('nome')
             ->where('situacao', '=', 'pago')
             ->get();
 
