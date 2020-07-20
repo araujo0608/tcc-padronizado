@@ -69,7 +69,11 @@ class BudgetController extends Controller
             $dataAtual = date('Y-m-d');
 
         $ant_man = DB::table('budget')
-        ->where('idusuario', '=', $request->idusuario)
+        ->where([
+            ['idusuario', '=', $request->idusuario],
+            ['preco', '=', $request->preco],
+            ['vencimento', '=', $request->vencimento]
+            ])
         ->update([
             'situacao' => 'pago',
             'dataPagamento' => $dataAtual
@@ -120,18 +124,27 @@ class BudgetController extends Controller
             return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
         }
 
+        $mes = date('m');
+
+        switch($mes){
+            case 07:
+                echo "pegou!";
+            break;
+        }
+
         $spider_man = DB::table('budget')
             ->join('users', 'budget.idusuario', '=', 'users.id')
             ->select(
-                'users.id',
+                        'users.id',
                         'users.nome',
                         'users.email',
                         'budget.preco',
                         'budget.dataPagamento',
                         'budget.vencimento',
-                        'budget.situacao'
+                        'budget.situacao',
+                        'budget.idusuario'
             )
-            ->orderBy('vencimento')
+            ->orderBy('')
             ->where('situacao', '=', 'pago')
             ->get();
 
@@ -202,5 +215,31 @@ class BudgetController extends Controller
         else {
             echo "erro na delecao do usuario ".$request->id;
         }
+    }
+
+    #Funcao que deleta os orcamentos pagos
+    public function delPaydBudget(Request $request){
+        #Verificando se tem uma sessao autenticada para logar
+        if(!session('auth')){
+            return redirect()->route('aluno.login')->withInput()->withErrors(['faca login !']);
+        }
+
+
+        $hulk = DB::table('budget')
+            ->where([
+                ['idusuario', '=', $request->idusuario],
+                ['preco', '=', $request->preco],
+                ['vencimento', '=', $request->vencimento],
+                ['dataPagamento', '=', $request->dataPagamento],
+                ['situacao', '=', 'pago']
+            ])
+            ->delete();
+
+            if($hulk){
+                return redirect()->route('adm.orcamento.listar.pagos')->withInput()->withErrors(['Deletado!']);
+            }
+            else{
+                return redirect()->route('adm.orcamento.listar.pagos')->withInput()->withErrors(['Erro ao deletar o pagamento!']);
+            }
     }
 }

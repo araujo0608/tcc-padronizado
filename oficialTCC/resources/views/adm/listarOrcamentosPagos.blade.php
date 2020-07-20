@@ -10,29 +10,52 @@
     
     <h1> Orcamentos Pagos </h1>
 
-    <table border="2">
-        <tr>
-            <th>#</th>
-            <th>Usuario</th>
-            <th>Email</th>
-            <th>Preco</th>
-            <th>Data do Pagamento</th>
-            <th>Data de vencimento</th>
-            <th>Situacao</th>
-        </tr>
+    @if (count($dados) <= 0)
+        <h2>Ops! Nao há registros</h2>
+    @else
 
-        @foreach($dados as $dado)
-            <tr>
-                <td>{{$dado->id}}</td>
-                <td>{{$dado->nome}}</td>
-                <td>{{$dado->email}}</td>
-                <td>{{$dado->preco}}</td>
-                <td>{{ date('d-m-Y',strtotime($dado->dataPagamento))}}</td>
-                <td>{{ date('d-m-Y', strtotime($dado->vencimento))}}</td>
-                <td>{{$dado->situacao}}</td>
-            </tr>
-        @endforeach
-    </table>
+    @if($errors->all())
+    @foreach ($errors->all() as $error)
+        {{$error}}
+    @endforeach
+@endif
+<table border="2">
+    <tr>
+        <th>#</th>
+        <th>Usuario</th>
+        <th>Email</th>
+        <th>Preco</th>
+        <th>Data do Pagamento</th>
+        <th>Data de vencimento</th>
+        <th>Situacao</th>
+        <th>Excluir</th>
+    </tr>
+
+    @foreach($dados as $dado)
+        <tr>
+            <td>{{$dado->id}}</td>
+            <td>{{$dado->nome}}</td>
+            <td>{{$dado->email}}</td>
+            <td>{{$dado->preco}}</td>
+            <td>{{ date('d-m-Y',strtotime($dado->dataPagamento))}}</td>
+            <td>{{ date('d-m-Y', strtotime($dado->vencimento))}}</td>
+            <td>{{$dado->situacao}}</td>
+            <td>
+                <form action="{{route('adm.orcamento.pagos.deletar')}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="preco" value="{{$dado->preco}}">
+                    <input type="hidden" name="vencimento" value="{{$dado->vencimento}}">
+                    <input type="hidden" name="dataPagamento" value="{{$dado->dataPagamento}}">
+                    <input type="hidden" name="idusuario" value="{{$dado->idusuario}}">
+                    <button type="submit">excluir</button>
+                </form>
+            </td>
+        </tr>
+    @endforeach
+</table>
+
+    @endif
 
     <br>
     <br>
